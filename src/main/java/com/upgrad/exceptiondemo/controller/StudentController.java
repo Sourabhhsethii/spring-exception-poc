@@ -1,5 +1,7 @@
 package com.upgrad.exceptiondemo.controller;
 
+import com.upgrad.exceptiondemo.exceptions.RequestedResourceNotFoundException;
+import com.upgrad.exceptiondemo.model.ErrorModel;
 import com.upgrad.exceptiondemo.model.Student;
 import com.upgrad.exceptiondemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,11 @@ public class StudentController {
         List<Student> students = null;
         students = service.getAllStudents();
         return ResponseEntity.ok(students);
+    }
+
+    @ExceptionHandler(RequestedResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorModel handleRequestedResourceNotFoundException(){
+        return ErrorModel.builder().errorCode("ERR_STUDENT_NOT_FOUND").errorMessage("Student NotF ound").build();
     }
 }
