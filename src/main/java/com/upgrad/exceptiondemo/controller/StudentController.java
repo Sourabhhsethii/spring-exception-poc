@@ -32,8 +32,11 @@ public class StudentController {
     }
 
     @ExceptionHandler(RequestedResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ErrorModel handleRequestedResourceNotFoundException(){
-        return ErrorModel.builder().errorCode("ERR_STUDENT_NOT_FOUND").errorMessage("Student NotF ound").build();
+    ResponseEntity<ErrorModel> handleRequestedResourceNotFoundException(){
+        return new ResponseEntity(ErrorModel
+                .builder()
+                .errorCode("ERR_Student_NOT_FOUND")
+                .errorMessage("Student Not Found")
+                .build(), HttpStatus.BAD_REQUEST);
     }
 }
